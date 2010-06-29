@@ -1,0 +1,7 @@
+A PHP class to allow the sending of emails from your PHP Script
+
+Assumes that you have set up PHP correctly for email sending.
+
+Handles HTML or plain text emails, CC, BCC
+
+http://www.iknowfoobar.co.uk/php/php-email-class
