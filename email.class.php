@@ -67,9 +67,9 @@
       if(!$this->check_email_details()){return FALSE;}
 
       // if you have a problem from same spam engine or hotmail use these sample headers.
-			$headers = "";
-			$headers .= "X-Sender:  " . $this->from_name . " <" . $this->from_email . ">\n";
-			$headers .= "From: " . $this->from_name . " <" . $this->from_email . ">\n";
+      $headers = "";
+      $headers .= "X-Sender:  " . $this->from_name . " <" . $this->from_email . ">\n";
+      $headers .= "From: " . $this->from_name . " <" . $this->from_email . ">\n";
 
       // add in ccs
       if(!empty($this->cc))
@@ -89,36 +89,17 @@
         $headers .= "Reply-To: " . $this->reply_name . " <" . $this->reply_email . ">\n";
       }
 
-			$headers .= "Date: ".date("r")."\n";
-			$headers .= "Message-ID: <".date("YmdHis")."info@".$_SERVER['SERVER_NAME'].">\n";
-			$headers .= "Subject: " . $this->subject . "\n";
-			$headers .= "Return-Path: " . $this->from_name . " <" . $this->from_email . ">\n";
-			$headers .= "MIME-Version: 1.0\n";
-			$headers .= "Content-type: " . $this->type . ";charset=utf-8\n";
+      $headers .= "Date: ".date("r")."\n";
+      $headers .= "Message-ID: <".date("YmdHis")."info@".$_SERVER['SERVER_NAME'].">\n";
+      $headers .= "Subject: " . $this->subject . "\n";
+      $headers .= "Return-Path: " . $this->from_name . " <" . $this->from_email . ">\n";
+      $headers .= "MIME-Version: 1.0\n";
+      $headers .= "Content-type: " . $this->type . ";charset=utf-8\n";
 
-			// Send the email
+      // Send the email
       $tos = implode(', ', $this->to);
       if($this->type == 'text/plain'){$this->content = wordwrap($this->content);}
-			$email = mail($tos, $this->subject, $this->content, $headers);
-
-			if($email == TRUE)
-      {
-        // store email
-        $log = new emaillog();
-        $log->to         = implode(',', $this->to);
-        $log->cc         = implode(',', $this->cc);
-        $log->bcc        = implode(',', $this->bcc);
-        $log->subject    = $this->subject;
-        $log->content    = $this->content;
-        $log->type       = $this->type;
-        $log->from       = $this->from_name . " <" . $this->from_email . ">";
-        if(!empty($this->reply_email)){$log->replyto    = $this->reply_name . " <" . $this->reply_email . ">";}
-        $log->datetime   = date('Y-m-d H:m:s');
-        $log->save();
-        return TRUE;
-      }
-
-      return FALSE;
+      return mail($tos, $this->subject, $this->content, $headers);
     }
 
     /* PRIVATE METHODS ******************************************/
